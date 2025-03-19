@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="form-container">
+        <h1>사용자 목록 관리</h1>
+        <div>
+          <div class="label">🍎 이름</div>
+          <input type="text" :value="newName" v-model.trim.lazy="newName" />
+          <span v-if="isNameNull" class="error">이름을 입력하세요!</span>
+        </div>
+        <div>
+          <div class="label">🍎 전화번호</div>
+          <input type="text" :value="newPhone" v-model.trim.lazy="newPhone" />
+          <span v-if="isPhoneNull" class="error">전화번호를 입력하세요!</span>
+        </div>
+        <div>
+          <div class="label">🍎 지역</div>
+          <select v-model="newRegion">
+            <option disabled selected value="">지역을 선택하세요</option>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="충청">충청</option>
+            <option value="강원">강원</option>
+            <option value="전라">전라</option>
+            <option value="경상">경상</option>
+            <option value="제주">제주</option>
+          </select>
+          <span v-if="isRegionNull" class="error">지역을 선택하세요!</span>
+        </div>
+        <button @click="addUser">사용자 추가</button>
+
+        <div class="container">
+          <div>
+            <select v-model="selectRegion">
+              <option selected value="">모든 지역</option>
+              <option value="서울">서울</option>
+              <option value="경기">경기</option>
+              <option value="충청">충청</option>
+              <option value="강원">강원</option>
+              <option value="전라">전라</option>
+              <option value="경상">경상</option>
+              <option value="제주">제주</option>
+            </select>
+          </div>
+          <table class="user-list">
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>지역</th>
+                <th>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(user,index) in users"
+                :key="user.id"
+                class="user-item"
+                v-show="selectRegion==='' || user.region===selectRegion"
+              >
+                <td>{{index+1}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.region}}</td>
+                <td>
+                  <div class="delete-button" @click="deleteUser(index)">X</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div v-if="users.length===0">등록된 사용자가 없습니다</div>
+
+          <div
+            v-if="users.length>0 
+            && !users.some(user => selectRegion==='' || user.region===selectRegion)"
+          >
+            선택한 지역의 사용자가 없습니다
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const model = {
+        users: [
+          {
+            id: 1,
+            name: 'AA',
+            phone: '010-1234-1111',
+            region: '서울',
+          },
+          {
+            id: 2,
+            name: 'BB',
+            phone: '010-1234-1111',
+            region: '제주',
+          },
+          {
+            id: 3,
+            name: 'CC',
+            phone: '010-1234-1111',
+            region: '경기',
+          },
+        ],
+
+        newName: '',
+        newPhone: '',
+        newRegion: '',
+
+        selectRegion: '',
+
+        isNameNull: false,
+        isPhoneNull: false,
+        isRegionNull: false,
+      };
+
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return model;
+        },
+        methods: {
+          addUser: function () {
+            this.isNameNull = !this.newName;
+            this.isPhoneNull = !this.newPhone;
+            this.isRegionNull = !this.newRegion;
+
+            if (this.isNameNull || this.isPhoneNull || this.isRegionNull) {
+              return;
+            }
+
+            this.users.push({
+              id: Date.now(),
+              name: this.newName,
+              phone: this.newPhone,
+              region: this.newRegion,
+            });
+
+            this.newName = '';
+            this.newPhone = '';
+            this.newRegion = '';
+          },
+          deleteUser(index) {
+            this.users.splice(index, 1);
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

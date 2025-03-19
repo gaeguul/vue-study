@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue</title>
+  </head>
+  <body>
+    <div id="app">
+      위의 내용에 동의하십니까?
+      <input
+        type="checkbox"
+        v-model="agree"
+        true-value="YES"
+        false-value="NO"
+      />
+      <hr />
+      응답: <span>{{agree}}</span>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            agree: 'NO',
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

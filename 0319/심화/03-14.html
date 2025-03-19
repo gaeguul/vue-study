@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue</title>
+    <style>
+      .table {
+        border-collapse: collapse;
+        border: 1px solid black;
+        text-align: center;
+        width: 300px;
+      }
+      .table thead {
+        background-color: rgb(82, 82, 172);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(contact,index) in contacts" :key="contact.no">
+            <td>{{index+1}}</td>
+            <td>{{contact.name}}</td>
+            <td>{{contact.phone}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      const contacts = [
+        {
+          no: 1011,
+          name: 'RM',
+          phone: '010-1234-5678',
+        },
+        {
+          no: 1012,
+          name: '정국',
+          phone: '010-1234-5678',
+        },
+        {
+          no: 1013,
+          name: '제이홉',
+          phone: '010-1234-5678',
+        },
+        {
+          no: 1014,
+          name: '슈가',
+          phone: '010-1234-5678',
+        },
+      ];
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            contacts: contacts,
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

@@ -308,14 +308,10 @@
           return { users, orderValue };
         },
         watch: {
-          orderValue(current, old) {
-            if (current === 'id') {
-              this.users.sort((a, b) => {
-                return a[current] - b[current];
-              });
-            }
+          orderValue(current) {
             this.users.sort((a, b) => {
-              return a[current].localeCompare(b[current]);
+              if (current === 'id') return a[current] - b[current];
+              else return a[current].localeCompare(b[current]);
             });
           },
         },

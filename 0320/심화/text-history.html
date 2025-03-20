@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      .left-container,
+      .right-container {
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="left-container">
+          <h1>입력</h1>
+          <textarea v-model="input" @keyup.enter.exact="handleEnter"></textarea>
+        </div>
+        <div class="right-container">
+          <h1>히스토리</h1>
+          <div v-for="(history) in historyList" :key="history.id">
+            <div>{{history.content}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      let input = '';
+      const historyList = [
+        {
+          id: '1',
+          content: '하이',
+        },
+      ];
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            historyList,
+            input,
+          };
+        },
+        methods: {
+          handleEnter() {
+            this.historyList.push({
+              id: Date.now(),
+              content: this.input,
+            });
+            this.input = '';
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

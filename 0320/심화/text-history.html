@@ -21,7 +21,7 @@
       <div class="container">
         <div class="left-container">
           <h1>입력</h1>
-          <textarea v-model="input" @keyup.enter.exact="handleEnter"></textarea>
+          <textarea v-model="input" @keyup.enter.exact="addItem"></textarea>
         </div>
         <div class="right-container">
           <h1>히스토리</h1>
@@ -50,10 +50,11 @@
           };
         },
         methods: {
-          handleEnter() {
-            this.historyList.push({
+          addItem() {
+            if (this.input.trim() === '') return;
+            this.historyList.unshift({
               id: Date.now(),
-              content: this.input,
+              content: this.input.trim(),
             });
             this.input = '';
           },

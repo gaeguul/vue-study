@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>06-11</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 20pt;
+      }
+      .todo-done {
+        text-decoration: line-through;
+      }
+      .container {
+        padding: 10px 10px 10px 10px;
+      }
+      .panel-borderless {
+        border: 0;
+        box-shadow: none;
+      }
+      .pointer {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="card card-body bg-light">
+        <div classe="title">:: Todolist App</div>
+      </div>
+      <div class="card card-default card-borderless">
+        <div class="card-body">
+          <!-- 새 할 일 추가-->
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              v-model="todo"
+              @keyup.enter="addTodo"
+            />
+            <button @click="addTodo" class="btn btn-outline-primary">
+              추가
+            </button>
+          </div>
+
+          <!-- Todo 개수 -->
+          <ul class="list-group list-group-horizontal mb-3">
+            <li class="list-group-item">
+              전체
+              <span class="badge bg-primary rounded-pill"
+                >{{todolist.length}}</span
+              >
+            </li>
+            <li class="list-group-item">
+              진행중
+              <span class="badge bg-secondary rounded-pill"
+                >{{notCompletedLength}}</span
+              >
+            </li>
+            <li class="list-group-item">
+              완료
+              <span class="badge bg-success rounded-pill"
+                >{{completedLength}}</span
+              >
+            </li>
+          </ul>
+
+          <!-- 할 일 목록-->
+          <div class="col">
+            <ul class="list-group">
+              <li
+                v-for="(todo) in sortedTodoList"
+                :key="todo.id"
+                class="list-group-item d-flex justify-content-between align-items-center"
+                :class="{
+                  'list-group-item-success': todo.completed
+                }"
+              >
+                <span
+                  class="pointer"
+                  @click="toggleCompleted(todo.id)"
+                  :class="{ 'todo-done': todo.completed }"
+                  >{{todo.todo}}</span
+                >
+                <span
+                  @click.stop="deleteTodo(todo.id)"
+                  class="btn btn-secondary btn-sm"
+                  >삭제</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script type="text/javascript">
+      const ts = new Date().getTime();
+      const vm = Vue.createApp({
+        name: 'App',
+        data() {
+          return {
+            todo: '',
+            todolist: [
+              { id: ts, todo: '자전거 타기', completed: false },
+              { id: ts + 1, todo: '딸과 공원 산책', completed: true },
+              { id: ts + 2, todo: '일요일 애견 카페', completed: false },
+              { id: ts + 3, todo: 'Vue 원고 집필', completed: false },
+            ],
+          };
+        },
+        methods: {
+          addTodo() {
+            if (this.todo.length <= 0) return; // 길이가 0이면 추가하지 않음
+            this.todolist.push({
+              id: new Date().getTime(),
+              todo: this.todo,
+              completed: false,
+            });
+            this.todo = ''; // Todo 초기화
+          },
+
+          deleteTodo(id) {
+            let index = this.todolist.findIndex((element) => element.id === id);
+            this.todolist.splice(index, 1);
+          },
+
+          toggleCompleted(id) {
+            let index = this.todolist.findIndex((element) => element.id === id);
+            this.todolist[index].completed = !this.todolist[index].completed;
+          },
+        },
+
+        computed: {
+          sortedTodoList: function () {
+            return this.todolist.sort((a, b) => {
+              if (a.completed === b.completed) {
+                return a.todo.localeCompare(b.todo);
+              }
+              return a.completed - b.completed;
+            });
+          },
+          notCompletedLength: function () {
+            const cb = (prev, curr) => {
+              if (curr.completed) prev += 1;
+              return prev;
+            };
+            const len = this.todolist.reduce(cb, 0);
+            return len;
+          },
+          completedLength: function () {
+            const cb = (prev, curr) => {
+              if (!curr.completed) prev += 1;
+              return prev;
+            };
+            const len = this.todolist.reduce(cb, 0);
+            return len;
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

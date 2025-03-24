@@ -155,21 +155,13 @@
               return a.completed - b.completed;
             });
           },
-          notCompletedLength: function () {
-            const cb = (prev, curr) => {
-              if (curr.completed) prev += 1;
-              return prev;
-            };
-            const len = this.todolist.reduce(cb, 0);
-            return len;
+
+          notCompletedLength() {
+            return this.todolist.length - this.completedLength;
           },
-          completedLength: function () {
-            const cb = (prev, curr) => {
-              if (!curr.completed) prev += 1;
-              return prev;
-            };
-            const len = this.todolist.reduce(cb, 0);
-            return len;
+
+          completedLength() {
+            return this.todolist.filter((todo) => todo.completed).length;
           },
         },
       }).mount('#app');

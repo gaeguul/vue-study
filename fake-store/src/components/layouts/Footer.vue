@@ -1,7 +1,7 @@
 <template>
-  <div>This is Footer</div>
+  <div class="container-fluid text-center">
+    © COPYRIGHTS KB FULLSTACK. ALL RIGHTS RESERVED.
+  </div>
 </template>
 
 <script setup></script>
-
-<style></style>

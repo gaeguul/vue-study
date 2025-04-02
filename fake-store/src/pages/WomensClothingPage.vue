@@ -1,5 +1,5 @@
 <template>
-  <div>This is WomensClothingPage</div>
+  <div><h2>여성의류</h2></div>
 </template>
 
 <script setup></script>

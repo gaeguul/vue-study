@@ -1,8 +1,8 @@
 <template>
   <li class="nav-item">
-    <a class="nav-link" aria-current="page" :href="props.menu.url">
-      {{ props.menu.title }}</a
-    >
+    <router-link class="nav-link" :to="props.menu.url">{{
+      props.menu.title
+    }}</router-link>
   </li>
 </template>
 

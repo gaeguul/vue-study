@@ -16,26 +16,14 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li
-            v-for="(menu, index) in config.menus"
-            :key="index"
-            class="nav-item"
-          >
-            <a class="nav-link" aria-current="page" :href="menu.url">
-              {{ menu.title }}</a
-            >
-          </li>
-        </ul>
-      </div>
-      <button class="btn d-none d-lg-block">로그아웃</button>
+      <MenuGroup />
     </div>
   </nav>
 </template>
 
 <script setup>
 import config from '@/config';
+import MenuGroup from './menu/MenuGroup.vue';
 </script>
 
 <style></style>

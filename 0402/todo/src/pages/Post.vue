@@ -44,6 +44,14 @@ const router = useRouter();
 
 const addTodo = async () => {
   try {
+    if (!state.todo.todo) {
+      alert('제목을 입력해주세요.');
+      return;
+    } else if (!state.todo.desc) {
+      alert('설명을 입력해주세요.');
+      return;
+    }
+
     const url = `/api/todos`;
     const response = await axios.post(url, state.todo);
 

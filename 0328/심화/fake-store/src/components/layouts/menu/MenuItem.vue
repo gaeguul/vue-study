@@ -1,8 +1,9 @@
 <template>
   <li class="nav-item">
-    <router-link class="nav-link" :to="props.menu.url">{{
-      props.menu.title
-    }}</router-link>
+    <router-link class="nav-link" :to="props.menu.url">
+      <i :class="menu.icon"></i>
+      {{ props.menu.title }}</router-link
+    >
   </li>
 </template>
 

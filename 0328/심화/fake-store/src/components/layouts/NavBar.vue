@@ -1,7 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/"> {{ config.title }}</router-link>
+      <router-link class="navbar-brand" to="/">
+        <i class="fa-solid fa-house"></i>
+        {{ config.title }}</router-link
+      >
       <button class="navbar-toggler" type="button" @click="changeIsNavShow">
         <span class="navbar-toggler-icon"></span>
       </button>

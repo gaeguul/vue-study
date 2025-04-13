@@ -1,17 +1,14 @@
 <template>
   <div>
     <h2>가전</h2>
-
-    <div>
-      <ProductList :products="states.products" />
-    </div>
+    <ProductList :products="states.products" />
   </div>
 </template>
 
 <script setup>
 import { get } from '@/api/product';
 import ProductList from '@/components/layouts/ProductList.vue';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 const currentRoute = useRoute();
@@ -28,7 +25,9 @@ const getProducts = async () => {
   }
 };
 
-getProducts();
+onMounted(() => {
+  getProducts();
+});
 </script>
 
 <style></style>

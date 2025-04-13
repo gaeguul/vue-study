@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="states.productDetail.rating.rate">
     <h2>{{ states.productDetail.title }}</h2>
     <div>
       <div>{{ states.productDetail.category }}</div>
@@ -19,7 +19,7 @@
 
 <script setup>
 import { get } from '@/api/product';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 const currentRoute = useRoute();
@@ -29,12 +29,15 @@ const states = reactive({
 
 const getProductDetail = async () => {
   const productDetail = await get(currentRoute.params.id);
+
   if (productDetail) {
     states.productDetail = productDetail;
   }
 };
 
-getProductDetail();
+onMounted(() => {
+  getProductDetail();
+});
 </script>
 
 <style scoped>
